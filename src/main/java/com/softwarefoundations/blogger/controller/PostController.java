@@ -3,6 +3,8 @@ package com.softwarefoundations.blogger.controller;
 import com.softwarefoundations.blogger.entity.dto.PostDto;
 import com.softwarefoundations.blogger.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,8 +28,9 @@ public class PostController extends AbstractController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostDto>> listarPosts() {
-        return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+    public ResponseEntity<Page<PostDto>> listarPosts(Pageable paginacao) {
+        Page<PostDto> page = this.postService.listarPosts(paginacao);
+        return ResponseEntity.ok(page);
     }
 
     @PostMapping

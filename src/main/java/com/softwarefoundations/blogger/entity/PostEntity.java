@@ -1,5 +1,6 @@
 package com.softwarefoundations.blogger.entity;
 
+import com.softwarefoundations.blogger.entity.dto.PostDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,11 +10,13 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -38,6 +41,14 @@ public class PostEntity extends AbstractEntity {
     @PrePersist
     private void prePersist(){
         this.dataCadastro = LocalDateTime.now();
+    }
+
+    public PostDto toDto(){
+        PostDto dto = new PostDto();
+        dto.setPostId(this.getPostId());
+        dto.setTitulo(this.getTitulo());
+        dto.setTexto(this.getTexto());
+        return dto;
     }
 
 }

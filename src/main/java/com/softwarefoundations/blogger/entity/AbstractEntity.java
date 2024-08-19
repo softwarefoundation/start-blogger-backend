@@ -1,4 +1,6 @@
 package com.softwarefoundations.blogger.entity;
 
-public class AbstractEntity implements IEntity {
+import java.io.Serializable;
+
+public class AbstractEntity implements IEntity, Serializable {
 }
